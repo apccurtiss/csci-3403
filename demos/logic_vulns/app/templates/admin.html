@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">Super Secret Admin Dashboard</h1>
+
+<div class="box">
+  <h2 class="subtitle">Current Users</h2>
+  <ul>
+    {% for user, details in users.items() %}
+    <li><b>{{ user }}</b> (Balance: ${{ '%0.2f'| format(details['account_balance']|float) }}) <a href="/cart?username={{ user }}">See Cart</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

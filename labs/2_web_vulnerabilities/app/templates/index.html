@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if error %}
+<div class="notification is-danger mt-3 is-family-monospace">
+    {{ error }}
+</div>
+{% elif search_query and products %}
+Your search for <b>{{ search_query|safe }}</b> returned {{ products|length }} result(s):
+{% elif search_query and not results %}
+Your search for <b>{{ search_query|safe }}</b> returned no results
+{% endif %}
+
+<div class="is-flex">
+    {% for product in products %}
+    <div class="card m-3">
+        <div class="card-content mb-1">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-96x96">
+                        <img src="{{ product.picture_url }}" alt="Placeholder image">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="title is-2">{{ product.name }}</p>
+                    <p class="subtitle is-4">${{ product.price }}</p>
+                </div>
+            </div>
+            
+            <div class="content">
+                {{ product.description }}
+            </div>
+            <a class="button is-dark" onclick="alert('This functionality hasn\'t been implemented yet')">Add to cart</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

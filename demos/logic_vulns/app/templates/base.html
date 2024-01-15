@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/bulma.min.css">
+    <title>{% block title %}Nile: The World's Smallest Internet Store{% endblock %}</title>
+</head>
+
+<body>
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <nav class="mb-5 navbar is-danger" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a class="navbar-item has-text-weight-bold" href="/">
+                        Nile
+                    </a>
+                </div>
+                
+                <div id="navbarBasicExample" class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" href="/">
+                            Home
+                        </a>
+                        {% if user %}
+                        <a class="navbar-item" href="/cart?username={{ user['username'] }}">
+                            Cart
+                        </a>
+                        {% endif %}
+                        {% if user and user["username"] == "admin" %}
+                        <a class="navbar-item" href="/admin_dashboard">
+                            Admin Dashboard
+                        </a>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="navbar-end">
+                        {% if user %}
+                        <div class="navbar-item">
+                            Welcome, {{ user['username'] }}
+                        </div>
+                        <div class="navbar-item">
+                            <a class="button is-light" href="/logout">
+                                Log out
+                            </a>
+                        </div>
+			{% endif %}
+                    </div>
+                </div>
+            </nav>
+            
+            <div id="content">
+                {% block content %}{% endblock %}
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for category, message in messages %}
+                <li class="notification is-{{category}} mt-6">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</body>
+</html>

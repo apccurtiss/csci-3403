@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- The user is NOT logged in, display a signup page. -->
+<div class="columns p-3">
+    <div class="column box">
+        <h2 class="subtitle">Login</h2>
+        <form action="/login" method="post">
+            <div class="field">
+                <label class="label">Username</label>
+                <div class="control">
+                    <input name="username" class="input" type="text" placeholder="Username">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                    <input name="password" class="input" type="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="control">
+                <input type="submit" class="button is-info" value="Sign In"></input>
+            </div>
+            <a href="reset_password">Forgot password?</a>
+        </form>
+    </div>
+    <div class="column is-one-fifth">
+    </div>
+    <div class="column box">
+        <h2 class="subtitle">Sign up</h2>
+        <form action="/create_account" method="post">
+            <div class="field">
+                <label class="label">Username</label>
+                <div class="control">
+                    <input name="username" class="input" type="text" placeholder="Username">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Password</label>
+                <div class="control">
+                    <input name="password" class="input" type="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Confirm Password</label>
+                <div class="control">
+                    <input name="confirm_password" class="input" type="password" placeholder="Confirm password">
+                </div>
+            </div>
+            <div class="control">
+                <input type="submit" class="button is-info" value="Create Account"></input>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

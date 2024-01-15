@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card block">
+    <div class="card-content">
+        <div class="media">
+            <div class="media-left">
+                <figure class="image is-48x48">
+                    <img src="{{ user.picture_url }}" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <p class="title is-4">@{{ user.username }}</p>
+            </div>
+        </div>
+        
+        <form class="content" autocomplete="off" action="/post" method="POST">
+            <div class="block field has-addons">
+                <div class="control is-expanded">
+                    <input name="message" type="text" class="input" value="" maxlength=64 onkeyup="check_post_length(this)">
+                </div>
+                <div class="control">
+                    <input type="submit" value="Post" class="button is-info">
+                </div>
+            </div>
+            <div class="notification is-danger is-hidden" id="input_error">Posts can not be longer than 64 characters.</div>
+        </form>
+    </div>
+</div>
+{% for post in posts %}
+<div class="card">
+    <div class="card-content mb-1">
+        <div class="media">
+            <div class="media-left">
+                <figure class="image is-48x48">
+                    <img src="{{ post.picture_url }}" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <p class="title is-4">{{ post.username }}</p>
+                <p class="subtitle is-6"><time datetime="2016-1-1">{{ post.timestamp|dateconversion }}</time></p>
+            </div>
+        </div>
+        
+        <div class="content">
+            {{ post.message | safe }}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

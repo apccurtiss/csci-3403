@@ -1,0 +1,6 @@
+site_name: Hattitude
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences

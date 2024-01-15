@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title has-text-centered mb-6">Welcome to <b>Nile</b>, the world's smallest internet store!</h1>
+{% if user %}
+    <!-- The user is logged in, display the shop. -->
+    <h1 class="subtitle">Balance: ${{ '%0.2f'| format(user['account_balance']|float) }}</h1>
+    {% for name, details in items.items() %}
+    <div class="box">
+        <article class="media pb-5">
+            <div class="media-left">
+                <figure class="image is-64x64">
+                    <img src="/static/{{ details['icon'] }}" alt="Image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <strong>{{ name }}</strong> <small>${{ '%0.2f'| format(details["price"]|float) }}</small>
+                    <br>
+                    {{ details["description"] }}
+                </p>
+            </div>
+          </div>
+        </article>
+        <form action="/add_to_cart">
+            <input name="item_name" type="hidden" value="{{ name }}">
+            <div class="field has-addons">
+                <div class="control">
+                    <div class="field has-addons">
+                        <div class="control">
+                          <input name="quantity" class="input" type="number" value="1">
+                        </div>
+                        <div class="control">
+                            <input type="submit" class="button is-info" value="Add to cart">
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% endfor %}
+{% else %}
+    <!-- The user is NOT logged in, display a signup page. -->
+    <div class="columns">
+        <div class="column box">
+            <h2 class="subtitle">Login</h2>
+            <form action="/login">
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input name="username" class="input" type="text" placeholder="Username">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input name="password" class="input" type="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="control">
+                    <input type="submit" class="button is-danger" value="Sign In"></input>
+                </div>
+                <a href="reset_password">Forgot password?</a>
+            </form>
+        </div>
+        <div class="column is-one-fifth">
+        </div>
+        <div class="column box">
+            <h2 class="subtitle">Sign up</h2>
+            <form action="/create_account">
+                <div class="field">
+                    <label class="label">Username</label>
+                    <div class="control">
+                        <input name="username" class="input" type="text" placeholder="Username">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input name="password" class="input" type="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Confirm Password</label>
+                    <div class="control">
+                        <input name="confirm_password" class="input" type="password" placeholder="Confirm password">
+                    </div>
+                </div>
+                <div class="control">
+                    <input type="submit" class="button is-danger" value="Create Account"></input>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

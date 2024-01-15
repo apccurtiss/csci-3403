@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/bulma.min.css">
+    <script src="/static/main.js"></script>
+    <title>{% block title %}TweetBook{% endblock %}</title>
+</head>
+
+<body>
+    <div class="columns is-centered">
+        <div class="column is-half">
+            <nav class="mb-5 navbar is-info is-active" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a class="navbar-item has-text-weight-bold" href="/">
+                        TweetBook
+                    </a>
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+                <div id="navbar" class="navbar-menu">
+                    {% if user %}
+                    <div class="navbar-start">
+                        <form class="navbar-item dropdown is-hoverable" autocomplete="off" action="/api/search/users"  onsubmit="user_search(event, this)">
+                            <div class="field has-addons dropdown-trigger mb-0">
+                                <div class="control">
+                                    <input name="search" class="input" type="text" placeholder="Search Users" onkeyup="user_search(event, this.form)">
+                                </div>
+                            </div>
+                            <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
+                                <div id="user_search_results">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            Welcome, {{ user['username'] }}
+                        </div>
+                        <div class="navbar-item">
+                            <a class="button is-light" href="/logout">
+                                Log out
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </nav>
+            
+            <div id="content">
+                {% block content %}{% endblock %}
+            </div>
+
+            <div class="container" style="position: absolute; bottom: 16px; z-index: 999;">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="notification is-{{ category }} mb-2">
+                                {{ message | safe }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

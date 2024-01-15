@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/bulma.min.css">
+    <script src="/static/main.js"></script>
+    <title>{% block title %}Nile{% endblock %}</title>
+</head>
+
+<body>
+    <nav class="columns p-3 has-background-dark" role="navigation" aria-label="main navigation">
+        <div class="column is-narrow">
+            <a class="title has-text-weight-bold has-text-light" href="/">
+                Nile
+            </a>
+        </div>
+        
+        <form class="column" action="/search">
+            <div class="block field has-addons">
+                <div class="control is-expanded">
+                    <input name="query" type="text" class="input" value="{{ search_query }}">
+                </div>
+                <div class="control">
+                    <input type="submit" value="Search" class="button">
+                </div>
+            </div>
+        </form>
+
+        <div class="column is-narrow">
+            {% if user %}
+                <span class="subtitle has-text-light p-3">Welcome, {{ user['username'] }}</span>
+                <a class="button is-light" href="/logout">
+                    Log out
+                </a>
+            {% else %}
+                <a href="/login" class="button">
+                    Log in
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+    
+    <div class="p-3" id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="container p-3" style="position: absolute; bottom: 16px; z-index: 999;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="notification is-{{ category }} mb-2">
+                        {{ message | safe }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

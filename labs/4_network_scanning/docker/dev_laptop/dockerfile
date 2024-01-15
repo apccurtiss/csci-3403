@@ -1,0 +1,9 @@
+FROM httpd:2.4-alpine
+
+RUN apk update && apk add \
+    curl \
+    expect \
+    busybox-extras
+
+# This shell file should be injected as a volume by docker-compose
+CMD ["/bin/sh", "/usr/local/automation/automation.sh"]

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not cart %}
+    <h2 class="subtitle">Your cart is empty</h2>
+{% else %}
+    <ul>
+        {% for item, quantity in cart.items() %}
+            <article class="box media pb-5">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <img src="/static/{{ items[item]['icon'] }}" alt="Image">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>{{ item }}</strong> <small>Quantity: {{ quantity }}</small>
+                        <br>
+                        Total: ${{ '%0.2f'| format(items[item]["price"] * quantity|float) }}
+                    </p>
+                </div>
+            </div>
+            </article>
+        {% endfor %}
+        
+        <li>
+            <b>Total: ${{ '%0.2f'| format(total|float) }}</b>
+        </li>
+    </ul>
+    <a class="button is-warning" href="/checkout?username={{user['username']}}">Check out</a>
+{% endif %}
+{% endblock %}
