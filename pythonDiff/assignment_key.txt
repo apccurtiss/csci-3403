@@ -1,0 +1,23 @@
+from flask import Flask, render_template
+# Begin Diff code
+from difflib import HtmlDiff
+
+file_1 = open('differ_test_1.txt', 'r'
+file_2 = open('differ_test_2.txt', 'r')
+file_out = open('differ_output.txt', 'w')
+  
+differ = HtmlDiff() 
+diffTable = differ.make_table(file_1, file_2, fromdesc='Provided', todesc='Student Submission', context=True, numlines=3)
+
+file_1.close() 
+file_2.close() 
+file_out.close() 
+# End Diff code
+# End Diff code
+
+app = Flask(__name__)
+
+@app.route('/')
+# def hello():
+#     return 'Hello, World!'
+def index():
