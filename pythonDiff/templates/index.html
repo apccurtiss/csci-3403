@@ -42,26 +42,49 @@
 
 <body>
     <h1>{{ graded_verifier }}</h1>
-    <form action="/" method="get">
+    <!-- <form action="/" method="get">
         <button name="refresh" value="refresh_">Refresh</button>
-    </form>
+    </form> -->
     <form action="/diffSubmissionPrev" method="post">
-        <button name="previous" value="previous">Prev</button>
+        <button name="previous" value="previous" style="margin-top:50px">Prev</button>
     </form>
     <form action="/diffSubmissionNext" method="post">
         <button name="next" value="next">Next</button>
     </form>
     <form action="/postGradePartial" method="post">        
-        <input type="number" name = gradeValue placeholder="Input Grade out of 100" max="100" min="0" formaction="/postGradePartial"></input>
-        <input type="text" name = feedbackValue placeholder="Input Feedback" formaction="/postGradePartial"></input>
-        <input type="submit" name="gradePartial" value="Submit Grade with Feedback"></input>
-        <input type="submit" name="quickGrade100" value="Quick Grade 100" formaction="/postGrade100"></input>
+        <input id="gradeInput" type="number" name = gradeValue placeholder="Input Grade out of 100" max="100" min="0" style="width:150px" formaction="/postGradePartial"></input>
+        <input if="gradeFeedback" type="text" name = feedbackValue placeholder="Input Feedback" style="width:300px" formaction="/postGradePartial"></input>
+        <input id="quickPartial" type="submit" name="gradePartial" value="Submit Grade with Feedback" style="margin-right:50px"></input>
+        <input id="quick100" type="submit" name="quickGrade100" value="Quick Grade 100" formaction="/postGrade100"></input>
+        <!-- <button id="focusGradeValue" type="hidden"></button> -->
     </form>
 
+
+    <!-- <form action="/" method="get">
+        <button id="refresh-button" name="refresh" value="refresh_">Refresh</button>
+    </form> -->
+    <script>
+        function handle_keyup(event) {
+            if (event.key == "q" && event.altKey == true) {
+                document.getElementById("quick100").click();
+            } 
+            else if (event.key == "d" && event.altKey == true) {
+                document.getElementById("quickPartial").click();
+            }
+            else if (event.key == "g" && event.altKey == true) {
+                document.getElementById("gradeInput").focus();
+            }
+            else if (event.key == "f" && event.altKey == true) {
+                document.getElementById("gradeFeedback").focus();
+            }
+        }
+        document.addEventListener("keyup", handle_keyup);
+    </script>
+
     <p>Initialized to first ungraded file</p>
-    <h6>
+    <h5>
     {{ diff|safe }}
-    </h6>
+    </h5>
     <!-- <table class="diff" id="difflib_chg_to0__top"
            cellspacing="0" cellpadding="0" rules="groups" >
         <colgroup></colgroup> <colgroup></colgroup> <colgroup></colgroup>
